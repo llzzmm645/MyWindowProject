@@ -2,6 +2,7 @@
 
 HINSTANCE hInst;
 HWND hWnd;
+bool states[81];
 
 int WINAPI WinMain(
 	_In_ HINSTANCE hInstance,
@@ -39,7 +40,7 @@ BOOL InitWindow(){
 	hWnd = CreateWindow(className, windowName, WS_OVERLAPPEDWINDOW, 10, 10, 640, 480, NULL, NULL, hInst, NULL);
 	for (int i = 0;i < 9;i++) {
 		for (int j = 0;j < 9;j++) {
-			CreateWindow(TEXT("Button"), TEXT(""), WS_VISIBLE | WS_CHILD, 10+10*j, 10+10*i, 10, 10, hWnd, (HMENU)(100+i*9+j), hInst, NULL);
+			CreateWindow(TEXT("Button"), TEXT(""), WS_VISIBLE | WS_CHILD, 10+50*j, 10+50*i, 50, 50, hWnd, (HMENU)(100+i*9+j), hInst, NULL);
 		}
 	}
 	if (!hWnd) {
@@ -55,8 +56,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
 	case WM_COMMAND:{
 		int id = LOWORD(wParam);
 		TCHAR s[20] = { 0 };
-		wsprintf(s, TEXT("%d"), id);
-		MessageBox(NULL, s, s, MB_OK);
+		wsprintf(s, TEXT("%d"), id - 99);
+		if (id <= 180) {
+			if (!states[id - 100]) {
+				SendMessage((HWND)lParam, WM_SETTEXT, NULL, (LPARAM)s);
+			}
+			else {
+				SendMessage((HWND)lParam, WM_SETTEXT, NULL, (LPARAM)NULL);
+			}
+			states[id - 100] = !states[id - 100];
+		}
 		break;
 	}
 	default:
