@@ -37,7 +37,7 @@ ATOM MyRegister(HINSTANCE hInstance) {
 }
 
 BOOL InitWindow(){
-	hWnd = CreateWindow(className, windowName, WS_OVERLAPPEDWINDOW, 10, 10, 640, 480, NULL, NULL, hInst, NULL);
+	hWnd = CreateWindow(className, windowName, WS_OVERLAPPEDWINDOW, 10, 10, 640, 560, NULL, NULL, hInst, NULL);
 	for (int i = 0;i < 9;i++) {
 		for (int j = 0;j < 9;j++) {
 			CreateWindow(TEXT("Button"), TEXT(""), WS_VISIBLE | WS_CHILD, 10+50*j, 10+50*i, 50, 50, hWnd, (HMENU)(100+i*9+j), hInst, NULL);
